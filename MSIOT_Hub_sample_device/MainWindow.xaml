@@ -1,0 +1,76 @@
+﻿<Window x:Class="MSIOT_Hub_sample_device.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MSIOT_Hub_sample_device"
+        xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="472.957" Width="615.5">
+  <Grid RenderTransformOrigin="0.03,0.064" Margin="0,0,0,0.5">
+    <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="425" Margin="10,10,0,0" VerticalAlignment="Top" Width="590">
+      <TabItem Header="Main" Margin="-2,0,-1.5,-1">
+        <Grid Background="#FFE5E5E5">
+          <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="276" Margin="10,63,0,0" VerticalAlignment="Top" Width="173"/>
+          <Slider x:Name="TempSlider" HorizontalAlignment="Right" Height="231" Margin="0,63,522,0" VerticalAlignment="Top" Width="22" Maximum="100" AutoToolTipPlacement="TopLeft" Orientation="Vertical" ValueChanged="TempSlider_ValueChanged" IsEnabled="False"/>
+          <Label x:Name="label" Content="Temperature" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="77"/>
+          <Slider x:Name="HumiditySlider" HorizontalAlignment="Left" Margin="130,63,0,0" VerticalAlignment="Top" Width="22" Maximum="100" AutoToolTipPlacement="TopLeft" Height="231" Orientation="Vertical" ValueChanged="HumiditySlider_ValueChanged" IsEnabled="False"/>
+          <Label x:Name="label1" Content="Humidity" HorizontalAlignment="Left" Height="26" Margin="110,32,0,0" VerticalAlignment="Top" Width="60"/>
+          <Label x:Name="TemperatureLabel" Content="0" HorizontalAlignment="Left" Margin="38,313,0,0" VerticalAlignment="Top"/>
+          <Label x:Name="HumidityValueLabel" Content="0" HorizontalAlignment="Left" Margin="130,313,0,0" VerticalAlignment="Top"/>
+          <Image Name="StillImage" gif:AnimationBehavior.SourceUri="/Images/hvac.png" Margin="183,63,212,154" />
+          <Image Name="ShakeImage" gif:AnimationBehavior.SourceUri="/Images/hvac-shake.gif" Margin="183,63,212,154" Visibility="Hidden" />
+          <Image Name="MovingImage" gif:AnimationBehavior.SourceUri="/Images/hvac.gif" Margin="183,63,212,154" Visibility="Hidden" />
+          <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="276" Margin="372,63,0,0" VerticalAlignment="Top" Width="184"/>
+          <Slider x:Name="VibrationSlider" HorizontalAlignment="Left" Height="231" Margin="402,63,0,0" VerticalAlignment="Top" Width="22" Orientation="Vertical" Maximum="95" AutoToolTipPlacement="TopLeft" IsEnabled="False" ValueChanged="VibrationSlider_ValueChanged"/>
+          <Slider x:Name="OilPressureSlider" HorizontalAlignment="Left" Height="231" Margin="493,63,0,0" VerticalAlignment="Top" Width="22" Orientation="Vertical" Maximum="95" AutoToolTipPlacement="TopLeft" IsEnabled="False" ValueChanged="OilPressureSlider_ValueChanged"/>
+          <Label x:Name="label3" Content="Vibration" HorizontalAlignment="Left" Margin="383,32,0,0" VerticalAlignment="Top"/>
+          <Label x:Name="VibrationLabel" Content="0" HorizontalAlignment="Left" Margin="402,313,0,0" VerticalAlignment="Top" Width="22" Height="26" RenderTransformOrigin="0.208,0.346"/>
+          <Label x:Name="OilPressureLabel" Content="0" HorizontalAlignment="Left" Margin="493,313,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.394,2.538"/>
+          <Label x:Name="label6" Content="Oil Pressure" HorizontalAlignment="Left" Margin="468,32,0,0" VerticalAlignment="Top"/>
+          <Button x:Name="StartDeviceButton" Content="Start device" HorizontalAlignment="Left" Margin="188,248,0,0" VerticalAlignment="Top" Width="179" Click="StartDeviceButton_Click"/>
+          <Button x:Name="StopDeviceButton" Content="Stop device" HorizontalAlignment="Left" Margin="188,273,0,0" VerticalAlignment="Top" Width="179" RenderTransformOrigin="0.5,0.5" Click="StopDeviceButton_Click">
+            <Button.RenderTransform>
+              <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform/>
+                <RotateTransform Angle="0.039"/>
+                <TranslateTransform/>
+              </TransformGroup>
+            </Button.RenderTransform>
+          </Button>
+          <Image x:Name="VentClosedImage" HorizontalAlignment="Left" Height="47" Margin="188,340,0,0" VerticalAlignment="Top" Width="83" Source="Images/closedvent.png" RenderTransformOrigin="0.633,1.096"/>
+          <Label x:Name="label7" Content="Vent:" HorizontalAlignment="Left" Margin="188,309,0,0" VerticalAlignment="Top"/>
+          <Label x:Name="VentStatusLabel" Content="Closed" HorizontalAlignment="Left" Margin="230,309,0,0" VerticalAlignment="Top"/>
+          <Image x:Name="VentOpenImage" HorizontalAlignment="Left" Height="47" Margin="188,340,0,0" VerticalAlignment="Top" Width="83" Source="Images/openvent.png" Visibility="Hidden"/>
+          <Image x:Name="PingStoppedImage" HorizontalAlignment="Left" Height="47" Margin="306,340,0,0" VerticalAlignment="Top" Width="57" Source="Images/NotFlashing.png" RenderTransformOrigin="0.4,0.255"/>
+          <Image x:Name="PingStartedImage" gif:AnimationBehavior.SourceUri="Images/FlashingYellow.gif" HorizontalAlignment="Left" Height="47" Margin="310,340,0,0" VerticalAlignment="Top" Width="57" Visibility="Hidden"/>
+          <Label x:Name="label8" Content="Ping light" HorizontalAlignment="Left" Margin="306,309,0,0" VerticalAlignment="Top"/>
+        </Grid>
+      </TabItem>
+
+      <TabItem Header="Events" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54" Margin="0,0,0,0">
+        <Grid Background="#FFE5E5E5">
+          <TextBox x:Name="ReceivedEventsTextBox" HorizontalAlignment="Left" Height="325" Margin="11,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="273" IsReadOnly="True"/>
+          <Label x:Name="label2" Content="Received Messages" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="172"/>
+          <TextBox x:Name="SentMessagesTextbox" HorizontalAlignment="Left" Height="325" Margin="289,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="284" IsReadOnly="True"/>
+          <Label x:Name="label2_Copy" Content="Sent Messages" HorizontalAlignment="Left" Margin="284,31,0,0" VerticalAlignment="Top" Width="172"/>
+          <Label x:Name="label4" Content="Device Id:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+          <Label x:Name="DeviceIdLabel" Content="" HorizontalAlignment="Left" Margin="76,10,0,0" VerticalAlignment="Top" Width="208"/>
+        </Grid>
+      </TabItem>
+      <TabItem Header="Settings" Margin="-2.5,0,3,0">
+        <Grid Background="#FFE5E5E5">
+          <TextBox x:Name="DeviceIdTextBox" HorizontalAlignment="Left" Height="54" Margin="10,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="562"/>
+          <TextBox x:Name="IOTHubHostNameTextbox" HorizontalAlignment="Left" Height="54" Margin="10,69,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="562"/>
+          <TextBox x:Name="DeviceKeyTextbox" HorizontalAlignment="Left" Height="54" Margin="10,128,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="562"/>
+          <Button x:Name="ConnectDeviceButton" Content="Connect Device" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top" Width="146" Height="36" Click="ConnectDevice"/>
+          <!--<Button x:Name="StartTelemetryButton" Content="Start Device Telemetry&#xA;" HorizontalAlignment="Left" Height="36" Margin="10,228,0,0" VerticalAlignment="Top" Width="146" Click="StartTelemetry" IsEnabled="False"/>
+                    <Button x:Name="StopTelemetryButton" Content="Stop Device Telemetry&#xA;&#xA;" HorizontalAlignment="Left" Margin="10,269,0,0" VerticalAlignment="Top" Width="146" Height="36" Click="StopTelemetryClick" IsEnabled="False"/>-->
+        </Grid>
+      </TabItem>
+    </TabControl>
+    <Label x:Name="label5" Content="Device status:" HorizontalAlignment="Left" Margin="436,7,0,0" VerticalAlignment="Top" Width="84"/>
+    <Label x:Name="DeviceStatusLabel" Content="" HorizontalAlignment="Left" Margin="525,7,0,0" VerticalAlignment="Top"/>
+  </Grid>
+</Window>
